@@ -1,0 +1,38 @@
+/* Hero Section */
+.hero {
+    background-color: #e8d7f9;
+    text-align: center;
+    padding: 100px 20px;
+    margin: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(106, 27, 154, 0.2);
+    overflow: hidden;
+  }
+  
+  .hero-heading {
+    font-size: 40px;
+    color: #4a0072;
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeSlideUp 1s ease-out forwards;
+  }
+  
+  .hero-sub {
+    font-size: 20px;
+    color: #5e3370;
+    font-style: italic;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeSlideUp 1s ease-out forwards;
+    animation-delay: 0.5s;
+  }
+  
+  /* Animation */
+  @keyframes fadeSlideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

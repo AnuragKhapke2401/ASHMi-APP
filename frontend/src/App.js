@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Navbar from './components/Navbar/Navbar';
+import Hero from './components/Hero/Hero';
 
 function App() {
   const [time, setTime] = useState('');
@@ -10,10 +12,18 @@ function App() {
       .catch(err => console.error(err));
   }, []);
 
+  const handleLoginClick = () => {
+    alert('Login button clicked!');
+  };
+
   return (
     <div>
-      <h1>Backend Time:</h1>
-      <p>{time || 'Loading...'}</p>
+      <Navbar onLoginClick={handleLoginClick} />
+      <Hero />
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+        <h1>Backend Time:</h1>
+        <p>{time || 'Loading...'}</p>
+      </div>
     </div>
   );
 }
