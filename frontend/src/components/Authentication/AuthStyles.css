@@ -1,0 +1,166 @@
+.auth-modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(110, 109, 109, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.auth-modal {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form h2 {
+  text-align: center;
+  color: #6a1b9a;
+  margin-bottom: 0.5rem;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.input-container input:focus {
+  border-color: #6a1b9a;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-40%);
+  cursor: pointer;
+  color: #474747;
+}
+
+/* Button shared styles */
+button[type='submit'],
+button.send-otp {
+  padding: 12px;
+  border: none;
+  background-color: #56229b;
+  color: white;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+button[type='submit']:hover,
+button.send-otp:hover {
+  background-color: #6a1b9a;
+}
+
+.link-text {
+  color: #474747;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.link-text:hover {
+  color: #6a1b9a;
+}
+
+/* Popup message styling */
+.popup-message {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  background-color: #f3f0fa;
+  color: #6a1b9a;
+}
+
+/* Additional popup types */
+.popup-message.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.popup-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-modal {
+    width: 95%;
+    padding: 1.5rem;
+  }
+
+  .input-container input {
+    font-size: 0.95rem;
+  }
+
+  button[type='submit'],
+  button.send-otp {
+    font-size: 0.95rem;
+  }
+}
+
+/* OTP Icon */
+.otp-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #6a1b9a;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.otp-icon:hover {
+  color: #57219e;
+}
+
+.otp-icon.disabled {
+  pointer-events: none;
+  color: rgb(218, 29, 29);
+}
