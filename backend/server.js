@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 
 const authRoutes = require('./routes/authRoutes');
 const loginRoutesV2 = require('./routes/loginRoutesV2');
+const userRoutes = require('./routes/userRoutes'); 
+const logoutRoute = require('./routes/logoutRoute');
+
 
 const app = express();
 
@@ -40,6 +43,8 @@ app.use('/api/auth/login', loginLimiter);
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/auth', loginRoutesV2);
+app.use('/api/user', userRoutes); 
+app.use('/api/auth', logoutRoute);
 
 // Server Start
 app.listen(process.env.PORT || 5000, () => {

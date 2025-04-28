@@ -3,7 +3,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import axios from 'axios';
 import './AuthStyles.css';
 
-const LoginForm = ({ switchToRegister }) => {
+const LoginForm = ({ switchToRegister, onLoginSuccess }) => {  // <-- Added onLoginSuccess
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
@@ -33,9 +33,13 @@ const LoginForm = ({ switchToRegister }) => {
 
       if (res.data.message === 'Login successful') {
         showPopup('Login successful! Redirecting...', 'success');
+
         setTimeout(() => {
-          // Redirection logic here
-        }, 2000);
+          if (onLoginSuccess) {
+            onLoginSuccess({ email: form.email });  // <-- Call parent to update user
+          }
+        }, 1000);
+
       } else {
         showPopup(res.data.message || 'Login failed', 'error');
       }
