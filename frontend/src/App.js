@@ -3,11 +3,13 @@ import axios from 'axios';
 import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import AuthModal from './components/Authentication/AuthModal';
-import { Toaster, toast } from 'react-hot-toast'; // <-- toast imported
+import ViewProfile from './components/ViewProfile/ViewProfile'; // <-- import ViewProfile
+import { Toaster, toast } from 'react-hot-toast';
 
 function App() {
   const [time, setTime] = useState('');
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showProfile, setShowProfile] = useState(false); // <-- new state
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   const inactivityTimer = useRef(null);
@@ -69,7 +71,6 @@ function App() {
       await axios.get(`${process.env.REACT_APP_API_URL}/api/auth/logout`, { withCredentials: true });
       setUser(null);
       toast.success('Logged out successfully!');
-
       setTimeout(() => {
         window.location.href = '/'; // Redirect after a small delay
       }, 500);
@@ -80,13 +81,15 @@ function App() {
   };
 
   const handleViewBookings = () => {
-    // You can implement view bookings navigation here
     console.log('View Bookings clicked');
   };
 
   const handleViewProfile = () => {
-    // You can implement view profile navigation here
-    console.log('View Profile clicked');
+    setShowProfile(true); // <-- open the profile modal
+  };
+
+  const closeProfile = () => {
+    setShowProfile(false); // <-- close the profile modal
   };
 
   return (
@@ -108,6 +111,14 @@ function App() {
         <AuthModal
           onClose={closeAuthModal}
           onLoginSuccess={handleLoginSuccess}
+        />
+      )}
+
+      {showProfile && user && (
+        <ViewProfile 
+          user={user} 
+          onClose={closeProfile} 
+          setUser={setUser} 
         />
       )}
 

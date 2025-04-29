@@ -3,7 +3,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import axios from 'axios';
 import './AuthStyles.css';
 
-const LoginForm = ({ switchToRegister, onLoginSuccess }) => {  // <-- Added onLoginSuccess
+const LoginForm = ({ switchToRegister, onLoginSuccess }) => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
@@ -25,6 +25,16 @@ const LoginForm = ({ switchToRegister, onLoginSuccess }) => {  // <-- Added onLo
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!form.email || !form.password) {
+      showPopup('Please fill in all fields.', 'error');
+      return;
+    }
+    if (!emailRegex.test(form.email)) {
+      showPopup('Please enter a valid email.', 'error');
+      return;
+    }
+
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/login`, {
         email: form.email,
@@ -36,10 +46,9 @@ const LoginForm = ({ switchToRegister, onLoginSuccess }) => {  // <-- Added onLo
 
         setTimeout(() => {
           if (onLoginSuccess) {
-            onLoginSuccess({ email: form.email });  // <-- Call parent to update user
+            onLoginSuccess({ email: form.email });
           }
         }, 1000);
-
       } else {
         showPopup(res.data.message || 'Login failed', 'error');
       }

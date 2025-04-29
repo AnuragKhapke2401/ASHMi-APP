@@ -9,7 +9,7 @@ const authRoutes = require('./routes/authRoutes');
 const loginRoutesV2 = require('./routes/loginRoutesV2');
 const userRoutes = require('./routes/userRoutes'); 
 const logoutRoute = require('./routes/logoutRoute');
-
+const viewProfileRoutes = require('./routes/viewProfileRoutes');
 
 const app = express();
 
@@ -45,6 +45,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/auth', loginRoutesV2);
 app.use('/api/user', userRoutes); 
 app.use('/api/auth', logoutRoute);
+app.use('/api/user', viewProfileRoutes);
 
 // Server Start
 app.listen(process.env.PORT || 5000, () => {
