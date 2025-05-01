@@ -15,11 +15,12 @@
 .auth-modal {
   background-color: #fff;
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 400px;
   animation: slideUp 0.3s ease;
+  font-family: 'Arial', sans-serif;
 }
 
 @keyframes slideUp {
@@ -51,12 +52,12 @@
 
 .input-container input {
   width: 100%;
-  padding: 12px 40px 12px 12px;
-  border-radius: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 1rem;
-  outline: none;
+  font-size: 14px;
   transition: border 0.3s ease;
+  outline: none;
 }
 
 .input-container input:focus {
@@ -67,30 +68,34 @@
   position: absolute;
   right: 12px;
   top: 50%;
-  transform: translateY(-40%);
+  transform: translateY(-50%);
   cursor: pointer;
   color: #474747;
 }
 
-/* Button shared styles */
+/* Updated button styles to match profile modal */
 button[type='submit'],
 button.send-otp {
-  padding: 12px;
-  border: none;
-  background-color: #56229b;
+  background-color: #6a1b9a;
   color: white;
-  font-size: 1rem;
-  border-radius: 10px;
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: none;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 15px;
+  transition: all 0.3s ease;
   width: 100%;
+  margin-top: 10px;
 }
 
 button[type='submit']:hover,
 button.send-otp:hover {
-  background-color: #6a1b9a;
+  background-color: #8e24aa;
+  transform: scale(1.05);
 }
 
+/* Link text like in profile modal */
 .link-text {
   color: #474747;
   text-align: center;
@@ -126,7 +131,7 @@ button.send-otp:hover {
   color: #721c24;
 }
 
-/* Responsive */
+/* Responsive tweaks */
 @media (max-width: 480px) {
   .auth-modal {
     width: 95%;

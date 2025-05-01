@@ -42,7 +42,7 @@ const LoginForm = ({ switchToRegister, onLoginSuccess }) => {
       }, { withCredentials: true });
 
       if (res.data.message === 'Login successful') {
-        showPopup('Login successful! Redirecting...', 'success');
+        showPopup('Login successful!', 'success');
 
         setTimeout(() => {
           if (onLoginSuccess) {
@@ -90,6 +90,10 @@ const LoginForm = ({ switchToRegister, onLoginSuccess }) => {
 
       <p className="link-text" onClick={switchToRegister}>
         Don't have an account? Register
+      </p>
+
+      <p className="link-text" onClick={() => alert('Redirect to Forgot Password')}>
+        Forgot Password?
       </p>
 
       {message && (
