@@ -1,10 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+// AuthModal.js
+import React, { useRef, useEffect, useState } from 'react';
 import './AuthStyles.css';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import ForgotPasswordModal from './ForgotPasswordModal'; // Import
 
-const AuthModal = ({ onClose, onLoginSuccess }) => { // Accept onLoginSuccess
-  const [isLogin, setIsLogin] = React.useState(true);
+const AuthModal = ({ onClose, onLoginSuccess }) => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -20,8 +23,14 @@ const AuthModal = ({ onClose, onLoginSuccess }) => { // Accept onLoginSuccess
   return (
     <div className="auth-modal-background">
       <div className="auth-modal" ref={modalRef}>
-        {isLogin ? (
-          <LoginForm switchToRegister={() => setIsLogin(false)} onLoginSuccess={onLoginSuccess} />
+        {showForgotPassword ? (
+          <ForgotPasswordModal onClose={() => setShowForgotPassword(false)} />
+        ) : isLogin ? (
+          <LoginForm
+            switchToRegister={() => setIsLogin(false)}
+            onLoginSuccess={onLoginSuccess}
+            onForgotPassword={() => setShowForgotPassword(true)}
+          />
         ) : (
           <RegisterForm switchToLogin={() => setIsLogin(true)} />
         )}

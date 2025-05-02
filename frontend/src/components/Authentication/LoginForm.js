@@ -3,7 +3,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import axios from 'axios';
 import './AuthStyles.css';
 
-const LoginForm = ({ switchToRegister, onLoginSuccess }) => {
+const LoginForm = ({ switchToRegister, onLoginSuccess, onForgotPassword }) => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState('');
@@ -92,7 +92,7 @@ const LoginForm = ({ switchToRegister, onLoginSuccess }) => {
         Don't have an account? Register
       </p>
 
-      <p className="link-text" onClick={() => alert('Redirect to Forgot Password')}>
+      <p className="link-text" onClick={onForgotPassword}>
         Forgot Password?
       </p>
 
