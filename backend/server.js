@@ -11,6 +11,7 @@ const userRoutes = require('./routes/userRoutes');
 const logoutRoute = require('./routes/logoutRoute');
 const viewProfileRoutes = require('./routes/viewProfileRoutes');
 const forgotPasswordRoutes = require('./routes/forgotPasswordRoutes');
+const resetPasswordRoutes = require('./routes/resetPasswordRoutes');
 
 const app = express();
 
@@ -48,7 +49,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', logoutRoute);
 app.use('/api/user', viewProfileRoutes);
 app.use('/api/auth', forgotPasswordRoutes);
-
+app.use('/api/auth', resetPasswordRoutes);
 
 // Server Start
 app.listen(process.env.PORT || 5000, () => {

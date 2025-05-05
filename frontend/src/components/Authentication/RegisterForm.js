@@ -19,6 +19,7 @@ const RegisterForm = ({ switchToLogin }) => {
   const [messageType, setMessageType] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState('');
 
   useEffect(() => {
     let interval = null;
@@ -42,14 +43,44 @@ const RegisterForm = ({ switchToLogin }) => {
   };
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    if (name === 'password') {
+      checkPasswordStrength(value);
+    }
   };
+
+  const checkPasswordStrength = (password) => {
+    let strength = 'Weak';
+    if (password.length >= 8) {
+      const hasUpper = /[A-Z]/.test(password);
+      const hasLower = /[a-z]/.test(password);
+      const hasDigit = /\d/.test(password);
+      const hasSpecial = /[\W_]/.test(password);
+      const score = [hasUpper, hasLower, hasDigit, hasSpecial].filter(Boolean).length;
+
+      if (score === 4) strength = 'Strong';
+      else if (score >= 2) strength = 'Medium';
+    }
+    setPasswordStrength(strength);
+  };
+
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const validatePassword = (password) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(password);
 
   const sendOtp = async () => {
     const { fullName, email, mobile } = form;
 
     if (!fullName || !email || !mobile) {
       showPopup('Please fill all details before sending OTP', 'error');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      showPopup('Invalid email format', 'error');
       return;
     }
 
@@ -60,14 +91,14 @@ const RegisterForm = ({ switchToLogin }) => {
 
     try {
       const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/send-otp`, {
-        fullName,
-        email,
-        mobile,
+        fullName: fullName.trim(),
+        email: email.trim(),
+        mobile: mobile.trim(),
       }, { withCredentials: true });
 
       if (res.data.message === 'OTP sent successfully') {
         setOtpSent(true);
-        setTimer(120); // 2 minutes
+        setTimer(120);
         showPopup('OTP sent to email!', 'success');
       }
     } catch (err) {
@@ -80,41 +111,43 @@ const RegisterForm = ({ switchToLogin }) => {
   };
 
   const resendOtp = () => {
-    if (timer === 0) {
-      sendOtp();
-    }
+    if (timer === 0) sendOtp();
   };
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!/^\d{6}$/.test(form.otp)) {
+    const trimmedForm = {
+      fullName: form.fullName.trim(),
+      email: form.email.trim(),
+      mobile: form.mobile.trim(),
+      otp: form.otp.trim(),
+      password: form.password,
+      confirmPassword: form.confirmPassword,
+    };
+
+    if (!/^\d{6}$/.test(trimmedForm.otp)) {
       showPopup('OTP must be 6 digits', 'error');
       return;
     }
 
-    if (form.password.length < 8) {
-      showPopup('Password must be at least 8 characters', 'error');
+    if (!validatePassword(trimmedForm.password)) {
+      showPopup('Password must be 8+ chars and include upper, lower, number, and symbol', 'error');
       return;
     }
 
-    if (form.password !== form.confirmPassword) {
+    if (trimmedForm.password !== trimmedForm.confirmPassword) {
       showPopup('Passwords do not match', 'error');
       return;
     }
 
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, {
-        ...form
-      }, { withCredentials: true });
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/register`, trimmedForm, {
+        withCredentials: true,
+      });
 
-      if (res.data.message === 'Registered successfully') {
-        showPopup('Registration successful! Redirecting to login...', 'success');
-        setTimeout(() => switchToLogin(), 2000);
-      } else {
-        showPopup(res.data.message || 'Registered!', 'success');
-        setTimeout(() => switchToLogin(), 2000);
-      }
+      showPopup(res.data.message || 'Registered!', 'success');
+      setTimeout(() => switchToLogin(), 2000);
     } catch (err) {
       showPopup(err.response?.data?.message || 'Registration failed', 'error');
     }
@@ -191,7 +224,7 @@ const RegisterForm = ({ switchToLogin }) => {
             <input
               type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Password (min 8 chars)"
+              placeholder="Password (min 8 chars, strong)"
               value={form.password}
               onChange={handleChange}
               required
@@ -200,6 +233,12 @@ const RegisterForm = ({ switchToLogin }) => {
               {showPassword ? <AiFillEyeInvisible size={24} /> : <AiFillEye size={24} />}
             </span>
           </div>
+
+          {form.password && (
+            <div className="password-strength-bar">
+              <div className={`bar ${passwordStrength.toLowerCase()}`}></div>
+            </div>
+          )}
 
           <div className="input-container">
             <input
