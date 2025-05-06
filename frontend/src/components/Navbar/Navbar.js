@@ -2,30 +2,47 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
 import './Navbar.css';
 
-const Navbar = ({ onLoginClick, user, authLoading, onLogout, onViewBookings, onViewProfile }) => { 
+const Navbar = ({ onLoginClick, user, authLoading, onLogout, onViewBookings, onViewProfile }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const menuRef = useRef(null);
+  const [isAnimating, setIsAnimating] = useState(false);
   const navbarRef = useRef(null);
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    const navLinks = document.querySelector('.nav-links');
+    if (menuOpen) {
+      setIsAnimating(true);
+      navLinks.classList.remove('show');
+      navLinks.classList.add('hiding');
+      setTimeout(() => {
+        navLinks.classList.remove('hiding');
+        setIsAnimating(false);
+        setMenuOpen(false);
+      }, 800); // Match the close transition duration
+    } else {
+      setMenuOpen(true);
+    }
   };
 
   const toggleProfileMenu = () => {
-    setProfileMenuOpen(!profileMenuOpen);
+    setProfileMenuOpen((prev) => !prev);
   };
 
+  // Close menus when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
-        setMenuOpen(false);
         setProfileMenuOpen(false);
+        if (menuOpen) toggleMenu();
       }
     };
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+  }, [menuOpen]);
+
+  const handleLinkClick = () => {
+    if (menuOpen && !isAnimating) toggleMenu();
+  };
 
   return (
     <nav className="navbar" ref={navbarRef}>
@@ -36,15 +53,17 @@ const Navbar = ({ onLoginClick, user, authLoading, onLogout, onViewBookings, onV
         </div>
 
         <div className="hamburger" onClick={toggleMenu}>
-          <span></span><span></span><span></span>
+          <span className={menuOpen ? 'open' : ''}></span>
+          <span className={menuOpen ? 'open' : ''}></span>
+          <span className={menuOpen ? 'open' : ''}></span>
         </div>
 
-        <ul ref={menuRef} className={`nav-links ${menuOpen ? 'show' : ''}`}>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#cars">Cars</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
+        <ul className={`nav-links ${menuOpen ? 'show' : ''}`}>
+          <li><a href="#home" onClick={handleLinkClick}>Home</a></li>
+          <li><a href="#cars" onClick={handleLinkClick}>Cars</a></li>
+          <li><a href="#about" onClick={handleLinkClick}>About</a></li>
+          <li><a href="#services" onClick={handleLinkClick}>Services</a></li>
+          <li><a href="#contact" onClick={handleLinkClick}>Contact</a></li>
 
           <li className="profile-menu-container">
             {!authLoading && (
@@ -53,13 +72,8 @@ const Navbar = ({ onLoginClick, user, authLoading, onLogout, onViewBookings, onV
                   <FaUserCircle size={30} color="white" />
                   {profileMenuOpen && (
                     <div className="profile-dropdown">
-                      {/* View Profile Button */}
                       <button onClick={onViewProfile}>View Profile</button>
-
-                      {/* View Bookings Button */}
                       <button onClick={onViewBookings}>View Bookings</button>
-
-                      {/* Logout Button */}
                       <button onClick={onLogout}>Logout</button>
                     </div>
                   )}

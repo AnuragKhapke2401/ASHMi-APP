@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.services-section {
+  padding: 60px 20px;
+  background-color: #f8f0ff;
+  margin: 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(106, 27, 154, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.services-section h2 {
+  text-align: center;
+  color: #4a0072;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 12px rgba(106, 27, 154, 0.15);
+  text-align: center;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.service-card.animate-up {
+  animation: fadeSlideUp 1s ease-out forwards;
+}
+
+.service-card.delay-1 {
+  animation-delay: 0.3s;
+}
+
+.service-card.delay-2 {
+  animation-delay: 0.6s;
+}
+
+.service-card h3 {
+  color: #6a1b9a;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.service-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Animation Keyframes */
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .services-section {
+    padding: 40px 15px;
+    margin: 15px;
+  }
+
+  .service-card {
+    padding: 20px;
+  }
+}

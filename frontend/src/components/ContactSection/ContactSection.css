@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+.contact-full {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #b388eb, #9c4dcc); /* Lighter purple to a slightly darker purple */
+  padding: 60px 20px; /* Reduced padding to decrease height */
+  text-align: center;
+  border-radius: 30px;
+}
+
+.contact-full h2 {
+  font-size: 36px;
+  color: #9c4dcc; /* Darker purple for a bold header */
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1); /* Soft text shadow for depth */
+}
+
+.contact-subtitle {
+  font-size: 18px;
+  color: #a5a5a5; /* Soft grey to contrast with the header */
+  margin-bottom: 30px; /* Reduced margin to decrease height */
+  font-weight: 400;
+}
+
+.contact-rows {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 18px;
+  color: #333;
+  transition: transform 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateY(-4px);
+  color: #8e44ad; /* Lively purple when hovered */
+}
+
+.contact-icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(179, 136, 235, 0.12); /* Light purple background */
+  color: #8e44ad; /* Purple icon color */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(179, 136, 235, 0.15); /* Soft shadow for depth */
+}
+
+.contact-icon:hover {
+  background: #b388eb; /* Lighter purple hover effect */
+  color: #fff;
+  transform: scale(1.1); /* Slight scale effect for interactivity */
+}
+
+.contact-item a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+}
+
+/* Mobile View Adjustment */
+@media (max-width: 768px) {
+  .contact-full {
+    padding: 30px 15px; /* Further reduce padding to decrease height */
+  }
+
+  .contact-full h2 {
+    font-size: 28px; /* Adjust header size */
+  }
+
+  .contact-subtitle {
+    font-size: 16px; /* Adjust subtitle font size */
+    margin-bottom: 20px; /* Reduce margin further */
+  }
+
+  .contact-rows {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px; /* Reduce gap between items */
+  }
+
+  .contact-item {
+    font-size: 16px; /* Adjust font size */
+  }
+
+  .contact-icon {
+    width: 48px;
+    height: 48px; /* Slightly smaller icons */
+    font-size: 18px; /* Adjust icon size */
+  }
+}

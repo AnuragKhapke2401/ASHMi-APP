@@ -52,6 +52,7 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
+  transition: none;
 }
 
 .nav-links li a {
@@ -99,6 +100,7 @@ body {
   width: 25px;
   background-color: white;
   border-radius: 5px;
+  transition: all 0.3s;
 }
 
 /* Profile dropdown */
@@ -161,12 +163,27 @@ body {
     position: absolute;
     top: 70px;
     left: 0;
-    padding: 15px 0;
-    display: none;
+    padding: 0;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.8s ease, opacity 0.2s ease, transform 0.8s ease;
+    z-index: 99;
   }
 
   .nav-links.show {
-    display: flex;
+    padding: 15px 0;
+    max-height: 500px;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .nav-links.hiding {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: max-height 0.8s ease, opacity 0.2s ease, transform 0.8s ease;
   }
 
   .nav-links li {
@@ -187,7 +204,6 @@ body {
     border-width: 1px;
   }
 
-  /* Profile dropdown adjust for mobile */
   .profile-dropdown {
     right: 10px;
     top: 50px;
