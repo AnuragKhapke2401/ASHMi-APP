@@ -5,11 +5,16 @@ import Navbar from './components/Navbar/Navbar';
 import Hero from './components/Hero/Hero';
 import AuthModal from './components/Authentication/AuthModal';
 import ViewProfile from './components/ViewProfile/ViewProfile';
-import ResetPasswordModal from './components/Authentication/ResetPasswordModal'; // ✅ new import
+import ResetPasswordModal from './components/Authentication/ResetPasswordModal'; 
+import CarSection from './components/cars/CarSection';
+import PredefinedRoutes from './components/PredefinedRoutes/PredefinedRoutes';
+import AboutSection from './components/AboutSection/AboutSection';
+import ServicesSection from './components/ServicesSection/ServicesSection';
+import ContactSection from './components/ContactSection/ContactSection';
+
 import { Toaster, toast } from 'react-hot-toast';
 
 function App() {
-  const [time, setTime] = useState('');
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [user, setUser] = useState(null);
@@ -23,12 +28,6 @@ function App() {
   const showResetPassword =
     location.pathname === '/reset-password' && resetEmail && resetToken;
 
-  useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api`)
-      .then((res) => setTime(res.data.time))
-      .catch((err) => console.error('Error fetching backend time:', err));
-  }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -121,8 +120,13 @@ function App() {
         onViewProfile={handleViewProfile}
       />
 
-      <Hero />
-
+      <div id="home"><Hero /></div>
+      <div id="cars"><CarSection /></div>
+      <PredefinedRoutes />
+      <div id="about"><AboutSection /></div>
+      <div id="services"><ServicesSection /></div>
+      <div id="contact"><ContactSection /></div>
+      
       {showAuthModal && (
         <AuthModal onClose={closeAuthModal} onLoginSuccess={handleLoginSuccess} />
       )}
@@ -134,11 +138,6 @@ function App() {
       {showResetPassword && (
         <ResetPasswordModal email={resetEmail} token={resetToken} />
       )}
-
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-        <h1>Backend Time:</h1>
-        <p>{time || 'Loading...'}</p>
-      </div>
     </div>
   );
 }

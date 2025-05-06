@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optional: prevent section content from hiding under a fixed navbar */
+#home, #cars, #about, #services, #contact {
+  scroll-margin-top: 80px; /* adjust according to your navbar height */
+}
